@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-interview
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ai-interview
+  template:
+    metadata:
+      labels:
+        app: ai-interview
+    spec:
+      containers:
+      - name: ai-interview
+        image: ai-interview
+        ports:
+        - containerPort: 8000

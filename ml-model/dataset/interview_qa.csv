@@ -1,0 +1,11 @@
+question,answer,skill
+What is Python GIL?,GIL is Global Interpreter Lock which allows only one thread to execute Python bytecode at a time,python
+What is a Python decorator?,Decorator is a function that modifies behavior of another function without changing its code,python
+What is Docker?,Docker is a containerization platform used to package applications with dependencies,docker
+Difference between Docker and VM?,Docker uses OS level virtualization while VM uses hardware level virtualization,docker
+What is supervised learning?,Supervised learning is a machine learning technique where model learns from labeled data,machine learning
+What is overfitting?,Overfitting occurs when a model learns training data too well and performs poorly on unseen data,machine learning
+What is Kubernetes?,Kubernetes is a container orchestration platform used to manage containerized applications,kubernetes
+What is a pod in Kubernetes?,A pod is the smallest deployable unit in Kubernetes which can contain one or more containers,kubernetes
+What is React?,React is a JavaScript library for building user interfaces using components,react
+What is a component in React?,A component is a reusable piece of UI in React applications,react
