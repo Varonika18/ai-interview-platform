@@ -23,4 +23,4 @@ def evaluate_answer(user_answer):
 
     best_score = max(scores[0])
 
-    return float(best_score)
+    return round(float(best_score) * 10, 1)
