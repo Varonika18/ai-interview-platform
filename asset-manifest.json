@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/ai-interview-platform/static/css/main.e6c13ad2.css",
+    "main.js": "/ai-interview-platform/static/js/main.4e0ecaff.js",
+    "index.html": "/ai-interview-platform/index.html",
+    "main.e6c13ad2.css.map": "/ai-interview-platform/static/css/main.e6c13ad2.css.map",
+    "main.4e0ecaff.js.map": "/ai-interview-platform/static/js/main.4e0ecaff.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.4e0ecaff.js"
+  ]
+}
