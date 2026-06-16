@@ -17,3 +17,37 @@ spec:
         image: ai-interview
         ports:
         - containerPort: 8000
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8000
+          initialDelaySeconds: 15
+          periodSeconds: 10
+
+---
+# Service: routes external traffic to one of the 2 pods (load balanced)
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-interview-service
+spec:
+  selector:
+    app: ai-interview        # matches the pods above
+  ports:
+  - protocol: TCP
+    port: 80                 # external port (what callers use)
+    targetPort: 8000         # pod port (where FastAPI runs)
+  type: LoadBalancer         # use NodePort if running locally with minikube

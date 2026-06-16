@@ -7,12 +7,13 @@ router = APIRouter()
 
 @router.post("/evaluate-answer")
 def evaluate(data: dict):
-    user_answer = data["answer"]
-    score = evaluate_answer(user_answer)
-    return {"score": score}
+    question = data.get("question", "")
+    user_answer = data.get("answer", "")
+    result = evaluate_answer(question, user_answer)
+    return result
 
 
 @router.get("/questions")
-def get_questions(subject: str, difficulty: str):
-    questions = generate_questions(subject, difficulty)
+def get_questions(subject: str, difficulty: str, count: int = 5):
+    questions = generate_questions(subject, difficulty, count)
     return {"questions": questions}

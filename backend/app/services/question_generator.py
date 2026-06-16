@@ -242,11 +242,26 @@ questions_db = {
 }
 
 
-def generate_questions(subject, difficulty):
+import random
+
+
+def generate_questions(subject, difficulty, count=5):
     subject = subject.lower()
     difficulty = difficulty.lower()
     if subject not in questions_db:
         return []
     if difficulty not in questions_db[subject]:
         return []
-    return questions_db[subject][difficulty]
+
+    pool = list(questions_db[subject][difficulty])
+
+    if count <= len(pool):
+        return random.sample(pool, count)
+
+    # If more questions requested than available, cycle through the pool
+    result = []
+    while len(result) < count:
+        shuffled = pool[:]
+        random.shuffle(shuffled)
+        result.extend(shuffled)
+    return result[:count]
