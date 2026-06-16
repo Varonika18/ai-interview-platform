@@ -29,6 +29,8 @@ const DIFFICULTIES = [
 
 const QUESTION_COUNTS = [5, 10, 20, 50];
 
+const API = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+
 export default function InterviewPage() {
   const { currentUser } = useAuth();
   const { colors } = useTheme();
@@ -52,7 +54,7 @@ export default function InterviewPage() {
     if (!subject || !difficulty) return;
     try {
       const res = await axios.get(
-        `http://127.0.0.1:8000/questions?subject=${subject}&difficulty=${difficulty}&count=${questionCount}`
+        `${API}/questions?subject=${subject}&difficulty=${difficulty}&count=${questionCount}`
       );
       setQuestions(res.data.questions);
       setCurrentQ(0);
@@ -73,7 +75,7 @@ export default function InterviewPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await axios.post('http://127.0.0.1:8000/evaluate-answer', {
+      const res = await axios.post(`${API}/evaluate-answer`, {
         question: questions[currentQ],
         answer,
       });
@@ -120,7 +122,7 @@ export default function InterviewPage() {
     setSolution(null);
     try {
       const res = await axios.get(
-        `http://127.0.0.1:8000/solution?question=${encodeURIComponent(questions[currentQ])}`
+        `${API}/solution?question=${encodeURIComponent(questions[currentQ])}`
       );
       setSolution(res.data.solution);
     } catch {
