@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from app.services.answer_evaluator import evaluate_answer
-from app.services.question_generator import generate_questions
+from app.services.question_generator import generate_questions, get_solution_for_question
 
 router = APIRouter()
 
@@ -17,3 +17,8 @@ def evaluate(data: dict):
 def get_questions(subject: str, difficulty: str, count: int = 5):
     questions = generate_questions(subject, difficulty, count)
     return {"questions": questions}
+
+
+@router.get("/solution")
+def get_solution(question: str):
+    return {"solution": get_solution_for_question(question)}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 
-function AnswerBox({ answer, setAnswer, submitAnswer, loading, submitted }) {
+function AnswerBox({ answer, setAnswer, submitAnswer, loading, submitted, onDontKnow }) {
   const { colors } = useTheme();
 
   return (
@@ -46,7 +46,7 @@ function AnswerBox({ answer, setAnswer, submitAnswer, loading, submitted }) {
         disabled={submitted}
       />
 
-      <div style={{ display: 'flex', gap: '10px', marginTop: '14px' }}>
+      <div style={{ display: 'flex', gap: '10px', marginTop: '14px', flexWrap: 'wrap' }}>
         <button
           onClick={submitAnswer}
           disabled={loading || !answer.trim() || submitted}
@@ -80,6 +80,29 @@ function AnswerBox({ answer, setAnswer, submitAnswer, loading, submitted }) {
             </>
           ) : submitted ? '✓ Evaluated' : 'Evaluate Answer →'}
         </button>
+
+        {!submitted && (
+          <button
+            onClick={onDontKnow}
+            disabled={loading || submitted}
+            style={{
+              padding: '11px 20px',
+              backgroundColor: 'transparent',
+              color: '#f59e0b',
+              border: '1.5px solid #f59e0b',
+              borderRadius: '10px',
+              cursor: loading || submitted ? 'not-allowed' : 'pointer',
+              fontSize: '14px',
+              fontWeight: '600',
+              fontFamily: 'inherit',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => { e.target.style.background = '#fef3c7'; }}
+            onMouseLeave={(e) => { e.target.style.background = 'transparent'; }}
+          >
+            I Don't Know — Show Answer
+          </button>
+        )}
 
         {submitted && (
           <div style={{

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 
-function ScoreCard({ score, feedback, onNext, isLast }) {
+function ScoreCard({ score, feedback, onNext, isLast, solution }) {
   const { colors } = useTheme();
 
   if (score === null) return null;
@@ -84,6 +84,27 @@ function ScoreCard({ score, feedback, onNext, isLast }) {
           borderRadius: '8px', textAlign: 'center', fontSize: '13px', color: colors.textMuted,
         }}>
           Analyzing your answer…
+        </div>
+      )}
+
+      {solution && (
+        <div style={{
+          marginBottom: '16px',
+          background: '#fffbeb',
+          border: '1px solid #fcd34d',
+          borderLeft: '4px solid #f59e0b',
+          borderRadius: '10px',
+          padding: '14px 16px',
+        }}>
+          <div style={{
+            fontSize: '11px', fontWeight: '700', color: '#b45309',
+            textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px',
+          }}>
+            💡 Model Answer
+          </div>
+          <p style={{ fontSize: '13px', color: '#78350f', margin: 0, lineHeight: '1.7', whiteSpace: 'pre-wrap' }}>
+            {solution}
+          </p>
         </div>
       )}
 

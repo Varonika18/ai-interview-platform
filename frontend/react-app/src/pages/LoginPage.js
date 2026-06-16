@@ -48,9 +48,11 @@ export default function LoginPage() {
       const msg = {
         'auth/wrong-password': 'Invalid email or password.',
         'auth/user-not-found': 'Invalid email or password.',
+        'auth/invalid-credential': 'Invalid email or password.',
         'auth/email-already-in-use': 'Email already in use. Try logging in.',
         'auth/weak-password': 'Password must be at least 6 characters.',
         'auth/invalid-email': 'Please enter a valid email address.',
+        'auth/too-many-requests': 'Too many attempts. Please try again later.',
       };
       setError(msg[e.code] || 'Something went wrong. Please try again.');
     }

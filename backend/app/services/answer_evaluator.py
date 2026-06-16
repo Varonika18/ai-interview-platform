@@ -33,13 +33,21 @@ def _keywords(text: str) -> set:
 
 def _calibrate(sim: float) -> float:
     """Map cosine similarity to a 0–10 interview score.
-    Linear scale: sim=0.10 → 0,  sim=0.80 → 10.
-    Anything below 0.10 is considered off-topic and scores 0.
+    all-MiniLM-L6-v2 realistically scores 0.15–0.40 for correct answers
+    phrased differently, so we calibrate to that realistic range.
+    sim < 0.10 → off-topic (0), sim >= 0.40 → full marks (10).
     """
     if sim < 0.10:
         return 0.0
-    score = (sim - 0.10) / 0.70 * 10
+    score = (sim - 0.10) / 0.30 * 10
     return round(min(10.0, max(0.0, score)), 1)
+
+
+def get_reference_answer(question: str) -> str:
+    q_emb = _model.encode(question)
+    sims = util.cos_sim(q_emb, _ref_embeddings)[0]
+    best_idx = int(sims.argmax())
+    return _ref_answers[best_idx] if best_idx < len(_ref_answers) else "No reference answer available."
 
 
 def evaluate_answer(question: str, user_answer: str) -> dict:

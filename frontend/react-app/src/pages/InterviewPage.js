@@ -46,6 +46,7 @@ export default function InterviewPage() {
   const [error, setError] = useState(null);
   const [history, setHistory] = useState([]);
   const [saved, setSaved] = useState(false);
+  const [solution, setSolution] = useState(null);
 
   const startQuiz = async () => {
     if (!subject || !difficulty) return;
@@ -113,6 +114,25 @@ export default function InterviewPage() {
     }
   };
 
+  const handleDontKnow = async () => {
+    setLoading(true);
+    setError(null);
+    setSolution(null);
+    try {
+      const res = await axios.get(
+        `http://127.0.0.1:8000/solution?question=${encodeURIComponent(questions[currentQ])}`
+      );
+      setSolution(res.data.solution);
+    } catch {
+      setSolution('Could not fetch model answer. Make sure the backend is running.');
+    }
+    const newEntry = { question: questions[currentQ], answer: '(skipped)', score: 0, feedback: null };
+    setHistory((prev) => [...prev, newEntry]);
+    setScore(0);
+    setFeedback(null);
+    setLoading(false);
+  };
+
   const nextQuestion = async (currentHistory) => {
     const finalHistory = currentHistory || history;
     if (currentQ + 1 >= questions.length) {
@@ -125,6 +145,7 @@ export default function InterviewPage() {
     setScore(null);
     setFeedback(null);
     setError(null);
+    setSolution(null);
   };
 
   const restart = () => {
@@ -138,6 +159,7 @@ export default function InterviewPage() {
     setAnswer('');
     setError(null);
     setSaved(false);
+    setSolution(null);
   };
 
   // ─── SELECTION SCREEN ───────────────────────────────────────────────────────
@@ -437,6 +459,7 @@ export default function InterviewPage() {
         submitAnswer={submitAnswer}
         loading={loading}
         submitted={score !== null}
+        onDontKnow={handleDontKnow}
       />
 
       {error && (
@@ -454,6 +477,7 @@ export default function InterviewPage() {
         feedback={feedback}
         onNext={() => nextQuestion(history)}
         isLast={isLast}
+        solution={solution}
       />
 
       <button
